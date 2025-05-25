@@ -1,6 +1,8 @@
 {
     "name": "@portal-solutions/hooker",
-    "workspaces": [],
+    "workspaces": [
+        "core"
+    ],
     "devDependencies": {
         "typescript": "^5.8.3"
     }
