@@ -1,7 +1,41 @@
-let _Proxy = Proxy;
-let _Reflect = Reflect;
+export let _Proxy = Proxy;
+export let _Reflect = { ...Reflect };
+export let hookProxies = new WeakMap();
 export function hook(a, b, c) {
-    a[b] = new _Proxy(a[b], c(_Reflect));
+    // a[b] = new _Proxy(a[b], c(_Reflect));
+    hookProp(a, b, d => ((d = d || { value: undefined }), {
+        configurable: d?.configurable,
+        enumerable: d?.enumerable,
+        writable: d?.writable,
+        get() {
+            var p, v;
+            if (d?.get) {
+                p = new _Proxy(v = d.get(), c(_Reflect));
+            }
+            else {
+                p = new _Proxy(v = d.value, c(_Reflect));
+            }
+            hookProxies.set(p, v);
+            return p;
+        },
+        set(value) {
+            while (hookProxies.has(value)) {
+                value = hookProxies.get(value);
+            }
+            if (d?.set) {
+                d.set(value);
+            }
+            else {
+                d.value = value;
+            }
+        }
+    }));
+}
+export function hookProp(a, b, c) {
+    let d = _Reflect.getOwnPropertyDescriptor(a, b);
+    // if (d !== undefined) {
+    _Reflect.defineProperty(a, b, c(d));
+    // }
 }
 export let events = new WeakMap();
 export function hookEvent(ev, event_proxy) {
