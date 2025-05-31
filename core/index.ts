@@ -43,7 +43,7 @@ export function hookEvent<T extends EventTarget>(ev: T, event_proxy: (Reflect: t
             let handler = argArray[1];
             let name;
             let h2 = $ => {
-                let e = new Proxy($, event_proxy(Reflect, name));
+                let e = new _Proxy($, event_proxy(Reflect, name));
                 events.set(e, $);
                 handler(e);
             };
