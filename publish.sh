@@ -1,3 +1,3 @@
 cd $(dirname $0)
-sh ./core/build.sh
+sh ./build.sh
 npm publish --access public --workspaces

@@ -1,12 +1,24 @@
 export let _Proxy = Proxy;
 export let _Reflect: typeof Reflect = { ...Reflect };
 export let hookProxies: WeakMap<any, any> = new WeakMap();
+export function snap<T, U, V>(fn: (this: T, ...U) => V): (self: T, ...U) => V {
+    return fn.call.bind(fn);
+}
+export type ProtoSnap<T> = { [Prop in keyof T]: T[Prop] extends (this: infer T2, ...U) => infer V ? (self: T2, ...U) => V : never };
+export function snapProto<T extends object>(val: T): ProtoSnap<T> {
+    let a = {};
+    for (let k of Object.keys(val)) {
+        a[k] = snap(val[k])
+    }
+    return a as ProtoSnap<T>;
+}
+
 export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b: K, c: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>) {
     // a[b] = new _Proxy(a[b], c(_Reflect));
     hookProp(a, b, d => ((d = d || { value: undefined }), {
-        configurable: d?.configurable,
-        enumerable: d?.enumerable,
-        writable: d?.writable,
+        configurable: d?.configurable ?? true,
+        enumerable: d?.enumerable ?? true,
+        writable: d?.writable ?? true,
         get() {
             var p: T[K], v: T[K];
             if (d?.get) {
@@ -71,3 +83,4 @@ export function hookEvent<T extends EventTarget>(ev: T, event_proxy: (Reflect: t
         }));
     }
 }
+export * from './extras.ts'
