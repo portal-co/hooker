@@ -9,7 +9,8 @@ export type ProtoSnapshot<T> = { [Prop in keyof T]: T[Prop] extends SnapshotInpu
 export function snapshotProto<T extends object>(val: T): ProtoSnapshot<T> {
     let a = {};
     for (let k of Object.keys(val)) {
-        a[k] = snapshot(val[k])
+        let wrapped;
+        if ((wrapped = val[k]) instanceof Function) a[k] = snapshot(wrapped);
     }
     return a as ProtoSnapshot<T>;
 }

@@ -27,7 +27,10 @@ function $160958df551d9c11$export$b8801ea43165ed7d(fn) {
 }
 function $160958df551d9c11$export$8dab992974ec7ae6(val) {
     let a = {};
-    for (let k of Object.keys(val))a[k] = $160958df551d9c11$export$b8801ea43165ed7d(val[k]);
+    for (let k of Object.keys(val)){
+        let wrapped;
+        if ((wrapped = val[k]) instanceof Function) a[k] = $160958df551d9c11$export$b8801ea43165ed7d(wrapped);
+    }
     return a;
 }
 function $160958df551d9c11$export$1062a250c78723ea(a, b, c) {
