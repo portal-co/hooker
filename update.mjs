@@ -9,9 +9,9 @@ const snapshots = [
     {name:"Uint8Array", proto:true}
 ]
 writeFileSync(`${__dirname}/core/extras.ts`,`
-import { snapProto } from "./index.ts";
+import { snapshotProto } from "./index.ts";
 ${snapshots.map(a => `
 export const _${a.name} = ${a.name};
-${a.proto ? `export const _${a.name}_prototype = snapProto(_${a.name}.prototype) ` : ''}
+${a.proto ? `export const _${a.name}_prototype = snapshotProto(_${a.name}.prototype) ` : ''}
 `).join('\n')}
 `)

@@ -1,16 +1,17 @@
 export let _Proxy = Proxy;
 export let _Reflect: typeof Reflect = { ...Reflect };
 export let hookProxies: WeakMap<any, any> = new WeakMap();
-export function snap<T, U, V>(fn: (this: T, ...U) => V): (self: T, ...U) => V {
+export function snapshot<T, U, V>(fn: (this: T, ...U) => V): (self: T, ...U) => V {
     return fn.call.bind(fn);
 }
-export type ProtoSnap<T> = { [Prop in keyof T]: T[Prop] extends (this: infer T2, ...U) => infer V ? (self: T2, ...U) => V : never };
-export function snapProto<T extends object>(val: T): ProtoSnap<T> {
+export type SnapshotInput<T, U, V> = (this: T, ...U) => V;
+export type ProtoSnapshot<T> = { [Prop in keyof T]: T[Prop] extends SnapshotInput<infer T2, infer U, infer V> ? (self: T2, ...U) => V : never };
+export function snapshotProto<T extends object>(val: T): ProtoSnapshot<T> {
     let a = {};
     for (let k of Object.keys(val)) {
-        a[k] = snap(val[k])
+        a[k] = snapshot(val[k])
     }
-    return a as ProtoSnap<T>;
+    return a as ProtoSnapshot<T>;
 }
 
 export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b: K, c: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>) {
