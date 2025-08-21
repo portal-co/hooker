@@ -6,7 +6,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const snapshots = [
     {name:"DataView",proto:true},
     {name:"ArrayBuffer",proto:false},
-    {name:"Uint8Array", proto:true}
+    {name:"Uint8Array", proto:true},
+    {name:"WeakMap",proto:true}
 ]
 writeFileSync(`${__dirname}/core/extras.ts`,`
 import { snapshotProto } from "./index.ts";

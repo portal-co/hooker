@@ -12,3 +12,7 @@ export const _ArrayBuffer = ArrayBuffer;
 export const _Uint8Array = Uint8Array;
 export const _Uint8Array_prototype = snapshotProto(_Uint8Array.prototype) 
 
+
+export const _WeakMap = WeakMap;
+export const _WeakMap_prototype = snapshotProto(_WeakMap.prototype) 
+

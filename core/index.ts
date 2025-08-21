@@ -1,6 +1,8 @@
-export let _Proxy = Proxy;
-export let _Reflect: typeof Reflect = { ...Reflect };
-export let hookProxies: WeakMap<any, any> = new WeakMap();
+import { _WeakMap_prototype } from './extras.ts';
+
+export const _Proxy = Proxy;
+export const _Reflect: typeof Reflect = { ...Reflect };
+export const hookProxies: WeakMap<any, any> = new WeakMap();
 export function snapshot<T, U, V>(fn: (this: T, ...U) => V): (self: T, ...U) => V {
     return fn.call.bind(fn);
 }
@@ -15,33 +17,37 @@ export function snapshotProto<T extends object>(val: T): ProtoSnapshot<T> {
     return a as ProtoSnapshot<T>;
 }
 
-export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b: K, c: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>) {
+export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b: K, c: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty = false, Proxy = _Proxy }: { isProperty?: boolean, Proxy?: typeof _Proxy } = {}) {
     // a[b] = new _Proxy(a[b], c(_Reflect));
-    hookProp(a, b, d => ((d = d || { value: undefined }), {
-        configurable: d?.configurable ?? true,
-        enumerable: d?.enumerable ?? true,
-        writable: d?.writable ?? true,
-        get() {
-            var p: T[K], v: T[K];
-            if (d?.get) {
-                p = new _Proxy(v = d!.get!(), c(_Reflect));
-            } else {
-                p = new _Proxy(v = d!.value!, c(_Reflect));
+    if (isProperty) {
+        hookProp(a, b, d => ((d ??= { value: undefined }), {
+            configurable: d?.configurable ?? true,
+            enumerable: d?.enumerable ?? true,
+            writable: d?.writable ?? true,
+            get() {
+                var p: T[K], v: T[K];
+                if (d?.get) {
+                    p = new (Proxy)(v = d!.get!(), c(_Reflect));
+                } else {
+                    p = new (Proxy)(v = d!.value!, c(_Reflect));
+                }
+                _WeakMap_prototype.set(hookProxies, p, v);
+                return p;
+            },
+            set(value) {
+                while (_WeakMap_prototype.has(hookProxies, value)) {
+                    value = _WeakMap_prototype.get(hookProxies, value)!;
+                }
+                if (d?.set) {
+                    d!.set!(value)
+                } else {
+                    d.value = value;
+                }
             }
-            hookProxies.set(p, v);
-            return p;
-        },
-        set(value) {
-            while (hookProxies.has(value)) {
-                value = hookProxies.get(value)!;
-            }
-            if (d?.set) {
-                d!.set!(value)
-            } else {
-                d.value = value;
-            }
-        }
-    }));
+        }));
+    } else {
+        a[b] = new (Proxy)(a[b],c(_Reflect));
+    }
 }
 export function hookProp<T extends { [a in K]: any }, K extends keyof T>(a: T, b: K, c: (d: TypedPropertyDescriptor<T[K]> | undefined) => TypedPropertyDescriptor<T[K]>) {
     let d = _Reflect.getOwnPropertyDescriptor(a, b);
@@ -49,40 +55,5 @@ export function hookProp<T extends { [a in K]: any }, K extends keyof T>(a: T, b
     _Reflect.defineProperty(a, b, c(d));
     // }
 }
-export let events: WeakMap<Event, Event> = new WeakMap();
-export function hookEvent<T extends EventTarget>(ev: T, event_proxy: (Reflect: typeof _Reflect, name: string) => ProxyHandler<Event>) {
-    let m: WeakMap<any, any> = new WeakMap();
-    hook(ev, "addEventListener", Reflect => ({
-        apply(target, thisArg, argArray) {
-            let handler = argArray[1];
-            let name;
-            let h2 = $ => {
-                let e = new _Proxy($, event_proxy(Reflect, name));
-                events.set(e, $);
-                handler(e);
-            };
-            m.set(handler, h2);
-            return Reflect.apply(target, thisArg, [name = argArray[0], h2]);
-        },
-    }));
-    hook(ev, "removeEventListener", Reflect => ({
-        apply(target, thisArg, argArray) {
-            let handler = argArray[1];
-            let h2 = m.get(handler);
-            m.delete(handler);
-            return Reflect.apply(target, thisArg, [argArray[0], h2]);
-        },
-    }));
-    if (ev instanceof EventSource) {
-        hook(ev, "dispatchEvent", Reflect => ({
-            apply(target, thisArg, argArray) {
-                var ev = argArray[0];
-                if (events.has(ev)) {
-                    ev = events.get(ev)!;
-                }
-                return Reflect.apply(target, thisArg, [ev])
-            },
-        }));
-    }
-}
+export * from './events.ts'
 export * from './extras.ts'
