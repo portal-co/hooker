@@ -1,8 +1,8 @@
-import { _Proxy, _Reflect, _WeakMap_prototype, hook } from "./index.ts";
+import { _Proxy, _Reflect, _WeakMap_prototype, _WeakMap, hook } from "./index.ts";
 
-export let events: WeakMap<Event, Event> = new WeakMap();
+export let events: WeakMap<Event, Event> = new _WeakMap();
 export function hookEvent<T extends EventTarget>(ev: T, event_proxy: (Reflect: typeof _Reflect, name: string) => ProxyHandler<Event>) {
-    let m: WeakMap<any, any> = new WeakMap();
+    let m: WeakMap<any, any> = new _WeakMap();
     hook(ev, "addEventListener", Reflect => ({
         apply(target, thisArg, argArray) {
             let handler = argArray[1];
@@ -12,7 +12,7 @@ export function hookEvent<T extends EventTarget>(ev: T, event_proxy: (Reflect: t
                 _WeakMap_prototype.set(events, e, $);
                 handler(e);
             };
-            m.set(handler, h2);
+            _WeakMap_prototype.set(m, handler, h2);
             return Reflect.apply(target, thisArg, [name = argArray[0], h2]);
         },
     }));

@@ -10,9 +10,9 @@ var $d96c5798fe320e70$exports = {};
 $parcel$export($d96c5798fe320e70$exports, "events", () => $d96c5798fe320e70$export$4bf9923669ad6c63);
 $parcel$export($d96c5798fe320e70$exports, "hookEvent", () => $d96c5798fe320e70$export$df859eeaa8b45967);
 
-let $d96c5798fe320e70$export$4bf9923669ad6c63 = new WeakMap();
+let $d96c5798fe320e70$export$4bf9923669ad6c63 = new (0, $160958df551d9c11$exports._WeakMap)();
 function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy) {
-    let m = new WeakMap();
+    let m = new (0, $160958df551d9c11$exports._WeakMap)();
     (0, $160958df551d9c11$export$1062a250c78723ea)(ev, "addEventListener", (Reflect)=>({
             apply (target, thisArg, argArray) {
                 let handler = argArray[1];
@@ -22,7 +22,7 @@ function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy) {
                     (0, $160958df551d9c11$exports._WeakMap_prototype).set($d96c5798fe320e70$export$4bf9923669ad6c63, e, $);
                     handler(e);
                 };
-                m.set(handler, h2);
+                (0, $160958df551d9c11$exports._WeakMap_prototype).set(m, handler, h2);
                 return Reflect.apply(target, thisArg, [
                     name = argArray[0],
                     h2
