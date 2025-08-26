@@ -77,7 +77,9 @@ function $160958df551d9c11$export$1062a250c78723ea(a, b, c, { isProperty: isProp
                 if (d?.set) d.set(value);
                 else d.value = value;
             }
-        }));
+        }), {
+        Reflect: Reflect1
+    });
     else a[b] = new Proxy(a[b], c(Reflect1));
 }
 function $160958df551d9c11$export$ba312a2d6db6c3aa(a, b, c, { Reflect: Reflect1 = $160958df551d9c11$export$c7c8cae26635c874 } = {}) {

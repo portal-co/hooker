@@ -35,7 +35,7 @@ export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b:
                     d.value = value;
                 }
             }
-        }));
+        }), { Reflect });
     } else {
         a[b] = new (Proxy)(a[b], c(Reflect));
     }
