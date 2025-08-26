@@ -12,13 +12,13 @@ $parcel$export($671788ef9f6dc157$exports, "_Uint8Array_prototype", () => $671788
 $parcel$export($671788ef9f6dc157$exports, "_WeakMap", () => $671788ef9f6dc157$export$bc81b4c74ea2198d);
 $parcel$export($671788ef9f6dc157$exports, "_WeakMap_prototype", () => $671788ef9f6dc157$export$17cf1b6ad644bf44);
 
-const $671788ef9f6dc157$export$fee260b073a0c9c6 = DataView;
-const $671788ef9f6dc157$export$fdecce9c58909361 = (0, $fbbf9f1270777348$export$8dab992974ec7ae6)($671788ef9f6dc157$export$fee260b073a0c9c6.prototype);
-const $671788ef9f6dc157$export$bb9d876482492a0e = ArrayBuffer;
-const $671788ef9f6dc157$export$8f39e0e69a4ee8ab = Uint8Array;
-const $671788ef9f6dc157$export$3e3718c836d59639 = (0, $fbbf9f1270777348$export$8dab992974ec7ae6)($671788ef9f6dc157$export$8f39e0e69a4ee8ab.prototype);
-const $671788ef9f6dc157$export$bc81b4c74ea2198d = WeakMap;
-const $671788ef9f6dc157$export$17cf1b6ad644bf44 = (0, $fbbf9f1270777348$export$8dab992974ec7ae6)($671788ef9f6dc157$export$bc81b4c74ea2198d.prototype);
+const $671788ef9f6dc157$export$fee260b073a0c9c6 = globalThis?.DataView;
+const $671788ef9f6dc157$export$fdecce9c58909361 = $671788ef9f6dc157$export$fee260b073a0c9c6 === undefined ? undefined : (0, $fbbf9f1270777348$export$8dab992974ec7ae6)($671788ef9f6dc157$export$fee260b073a0c9c6.prototype);
+const $671788ef9f6dc157$export$bb9d876482492a0e = globalThis?.ArrayBuffer;
+const $671788ef9f6dc157$export$8f39e0e69a4ee8ab = globalThis?.Uint8Array;
+const $671788ef9f6dc157$export$3e3718c836d59639 = $671788ef9f6dc157$export$8f39e0e69a4ee8ab === undefined ? undefined : (0, $fbbf9f1270777348$export$8dab992974ec7ae6)($671788ef9f6dc157$export$8f39e0e69a4ee8ab.prototype);
+const $671788ef9f6dc157$export$bc81b4c74ea2198d = globalThis?.WeakMap;
+const $671788ef9f6dc157$export$17cf1b6ad644bf44 = $671788ef9f6dc157$export$bc81b4c74ea2198d === undefined ? undefined : (0, $fbbf9f1270777348$export$8dab992974ec7ae6)($671788ef9f6dc157$export$bc81b4c74ea2198d.prototype);
 
 
 function $fbbf9f1270777348$export$b8801ea43165ed7d(fn) {

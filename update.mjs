@@ -12,7 +12,7 @@ const snapshots = [
 writeFileSync(`${__dirname}/snap/extras.ts`,`
 import { snapshotProto } from "./index.ts";
 ${snapshots.map(a => `
-export const _${a.name} = ${a.name};
-${a.proto ? `export const _${a.name}_prototype = snapshotProto(_${a.name}.prototype) ` : ''}
+export const _${a.name} = globalThis?.${a.name};
+${a.proto ? `export const _${a.name}_prototype = _${a.name} === undefined ? undefined : snapshotProto(_${a.name}.prototype) ` : ''}
 `).join('\n')}
 `.replaceAll('\n\n',"\n"))
