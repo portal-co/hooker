@@ -1,9 +1,5 @@
 import { _WeakMap_prototype, snapshot, snapshotProto } from '@portal-solutions/hooker-snap';
 
-
-
-
-
 export const hookProxies: WeakMap<any, any> = new WeakMap();
 export const _Proxy: typeof Proxy = globalThis?.Proxy;
 export const _Reflect: typeof Reflect = 'Reflect' in globalThis ? { ...Reflect } : undefined as any;

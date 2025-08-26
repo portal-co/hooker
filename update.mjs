@@ -15,4 +15,4 @@ ${snapshots.map(a => `
 export const _${a.name} = ${a.name};
 ${a.proto ? `export const _${a.name}_prototype = snapshotProto(_${a.name}.prototype) ` : ''}
 `).join('\n')}
-`)
+`.replaceAll('\n\n',"\n"))
