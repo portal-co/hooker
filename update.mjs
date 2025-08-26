@@ -9,7 +9,7 @@ const snapshots = [
     {name:"Uint8Array", proto:true},
     {name:"WeakMap",proto:true}
 ]
-writeFileSync(`${__dirname}/core/extras.ts`,`
+writeFileSync(`${__dirname}/snap/extras.ts`,`
 import { snapshotProto } from "./index.ts";
 ${snapshots.map(a => `
 export const _${a.name} = ${a.name};
