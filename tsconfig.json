@@ -3,6 +3,7 @@
         "lib": [
             "esnext",
             "DOM"
-        ]
+        ],
+        "allowImportingTsExtensions": true
     }
 }
