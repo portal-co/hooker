@@ -4,9 +4,11 @@ export const hookProxies: WeakMap<any, any> = _WeakMap ? new _WeakMap() : undefi
 const _hookProxies = hookProxies;
 export const _Proxy: typeof Proxy = globalThis?.Proxy;
 export const _Reflect: typeof Reflect = 'Reflect' in globalThis ? { ...Reflect } : undefined as any;
-export type HookOpts = { isProperty?: boolean, Proxy?: typeof _Proxy, Reflect?: typeof _Reflect, hookProxies?: typeof hookProxies };
-export function hook<T extends { [a in K]: object }, K extends keyof T>(object: T, key: K, hook: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty = false, Proxy = _Proxy, Reflect = _Reflect, hookProxies = _hookProxies }: HookOpts = {}) {
+export type HookOpts = { isProperty?: boolean, Proxy?: typeof _Proxy, Reflect?: typeof _Reflect, hookProxies?: typeof hookProxies, attempt?: boolean };
+const { isFrozen } = Object;
+export function hook<T extends { [a in K]: object }, K extends keyof T>(object: T, key: K, hook: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty = false, Proxy = _Proxy, Reflect = _Reflect, hookProxies = _hookProxies, attempt = false }: HookOpts = {}) {
     // a[b] = new _Proxy(a[b], c(_Reflect));
+    if (attempt && isFrozen(object)) return;
     if (isProperty) {
         hookProp(object, key, descriptor => ((descriptor ??= { value: undefined }), {
             configurable: descriptor?.configurable ?? true,
@@ -32,12 +34,13 @@ export function hook<T extends { [a in K]: object }, K extends keyof T>(object: 
                     descriptor.value = value;
                 }
             }
-        }), { Reflect });
+        }), { Reflect, attempt });
     } else {
         object[key] = new (Proxy)(object[key], hook(Reflect));
     }
 }
-export function hookProp<T extends { [a in K]: any }, K extends keyof T>(object: T, key: K, hook: (descriptor: TypedPropertyDescriptor<T[K]> | undefined) => TypedPropertyDescriptor<T[K]>, { Reflect = _Reflect }: { Reflect?: typeof _Reflect } = {}) {
+export function hookProp<T extends { [a in K]: any }, K extends keyof T>(object: T, key: K, hook: (descriptor: TypedPropertyDescriptor<T[K]> | undefined) => TypedPropertyDescriptor<T[K]>, { Reflect = _Reflect, attempt = false }: { Reflect?: typeof _Reflect, attempt?: boolean } = {}) {
+    if (attempt && isFrozen(object)) return;
     const descriptor = Reflect.getOwnPropertyDescriptor(object, key);
     // if (d !== undefined) {
     Reflect.defineProperty(object, key, hook(descriptor));
