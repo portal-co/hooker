@@ -3,8 +3,8 @@ import { _WeakMap_prototype, snapshot, snapshotProto } from '@portal-solutions/h
 export const hookProxies: WeakMap<any, any> = new WeakMap();
 export const _Proxy: typeof Proxy = globalThis?.Proxy;
 export const _Reflect: typeof Reflect = 'Reflect' in globalThis ? { ...Reflect } : undefined as any;
-
-export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b: K, c: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty = false, Proxy = _Proxy, Reflect = _Reflect }: { isProperty?: boolean, Proxy?: typeof _Proxy, Reflect?: typeof _Reflect } = {}) {
+export type HookOpts = { isProperty?: boolean, Proxy?: typeof _Proxy, Reflect?: typeof _Reflect };
+export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b: K, c: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty = false, Proxy = _Proxy, Reflect = _Reflect }: HookOpts = {}) {
     // a[b] = new _Proxy(a[b], c(_Reflect));
     if (isProperty) {
         hookProp(a, b, d => ((d ??= { value: undefined }), {

@@ -11,7 +11,7 @@ $parcel$export($d96c5798fe320e70$exports, "events", () => $d96c5798fe320e70$expo
 $parcel$export($d96c5798fe320e70$exports, "hookEvent", () => $d96c5798fe320e70$export$df859eeaa8b45967);
 
 let $d96c5798fe320e70$export$4bf9923669ad6c63 = new (0, $160958df551d9c11$exports._WeakMap)();
-function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy) {
+function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy, opts = {}) {
     let m = new (0, $160958df551d9c11$exports._WeakMap)();
     (0, $160958df551d9c11$export$1062a250c78723ea)(ev, "addEventListener", (Reflect)=>({
             apply (target, thisArg, argArray) {
@@ -28,7 +28,7 @@ function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy) {
                     h2
                 ]);
             }
-        }));
+        }), opts);
     (0, $160958df551d9c11$export$1062a250c78723ea)(ev, "removeEventListener", (Reflect)=>({
             apply (target, thisArg, argArray) {
                 let handler = argArray[1];
@@ -39,7 +39,7 @@ function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy) {
                     h2
                 ]);
             }
-        }));
+        }), opts);
     if (ev instanceof EventSource) (0, $160958df551d9c11$export$1062a250c78723ea)(ev, "dispatchEvent", (Reflect)=>({
             apply (target, thisArg, argArray) {
                 var ev = argArray[0];
@@ -48,7 +48,7 @@ function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy) {
                     ev
                 ]);
             }
-        }));
+        }), opts);
 }
 
 

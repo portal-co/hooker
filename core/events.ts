@@ -1,7 +1,7 @@
-import { _Proxy, _Reflect, _WeakMap_prototype, _WeakMap, hook } from "./index.ts";
+import { _Proxy, _Reflect, _WeakMap_prototype, _WeakMap, hook, HookOpts } from "./index.ts";
 
 export let events: WeakMap<Event, Event> = new _WeakMap();
-export function hookEvent<T extends EventTarget>(ev: T, event_proxy: (Reflect: typeof _Reflect, name: string) => ProxyHandler<Event>) {
+export function hookEvent<T extends EventTarget>(ev: T, event_proxy: (Reflect: typeof _Reflect, name: string) => ProxyHandler<Event>,opts: HookOpts = {}) {
     let m: WeakMap<any, any> = new _WeakMap();
     hook(ev, "addEventListener", Reflect => ({
         apply(target, thisArg, argArray) {
@@ -15,7 +15,7 @@ export function hookEvent<T extends EventTarget>(ev: T, event_proxy: (Reflect: t
             _WeakMap_prototype.set(m, handler, h2);
             return Reflect.apply(target, thisArg, [name = argArray[0], h2]);
         },
-    }));
+    }),opts);
     hook(ev, "removeEventListener", Reflect => ({
         apply(target, thisArg, argArray) {
             let handler = argArray[1];
@@ -23,7 +23,7 @@ export function hookEvent<T extends EventTarget>(ev: T, event_proxy: (Reflect: t
             _WeakMap_prototype.delete(m, handler);
             return Reflect.apply(target, thisArg, [argArray[0], h2]);
         },
-    }));
+    }),opts);
     if (ev instanceof EventSource) {
         hook(ev, "dispatchEvent", Reflect => ({
             apply(target, thisArg, argArray) {
@@ -33,6 +33,6 @@ export function hookEvent<T extends EventTarget>(ev: T, event_proxy: (Reflect: t
                 }
                 return Reflect.apply(target, thisArg, [ev])
             },
-        }));
+        }),opts);
     }
 }
