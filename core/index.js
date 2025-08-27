@@ -52,12 +52,13 @@ function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy, opts = {}) {
 }
 
 
-const $160958df551d9c11$export$a992e08d9566370c = new WeakMap();
+const $160958df551d9c11$export$a992e08d9566370c = (0, $fRX83$_WeakMap) ? new (0, $fRX83$_WeakMap)() : undefined;
+const $160958df551d9c11$var$_hookProxies = $160958df551d9c11$export$a992e08d9566370c;
 const $160958df551d9c11$export$38ba3e7950588cca = globalThis?.Proxy;
 const $160958df551d9c11$export$c7c8cae26635c874 = 'Reflect' in globalThis ? {
     ...Reflect
 } : undefined;
-function $160958df551d9c11$export$1062a250c78723ea(object, key, hook1, { isProperty: isProperty = false, Proxy: Proxy = $160958df551d9c11$export$38ba3e7950588cca, Reflect: Reflect1 = $160958df551d9c11$export$c7c8cae26635c874 } = {}) {
+function $160958df551d9c11$export$1062a250c78723ea(object, key, hook1, { isProperty: isProperty = false, Proxy: Proxy = $160958df551d9c11$export$38ba3e7950588cca, Reflect: Reflect1 = $160958df551d9c11$export$c7c8cae26635c874, hookProxies: hookProxies = $160958df551d9c11$var$_hookProxies } = {}) {
     // a[b] = new _Proxy(a[b], c(_Reflect));
     if (isProperty) $160958df551d9c11$export$ba312a2d6db6c3aa(object, key, (descriptor)=>(descriptor ??= {
             value: undefined
@@ -69,11 +70,11 @@ function $160958df551d9c11$export$1062a250c78723ea(object, key, hook1, { isPrope
                 var proxy, value;
                 if (descriptor?.get) proxy = new Proxy(value = descriptor.get(), hook1(Reflect1));
                 else proxy = new Proxy(value = descriptor.value, hook1(Reflect1));
-                (0, $fRX83$_WeakMap_prototype).set($160958df551d9c11$export$a992e08d9566370c, proxy, value);
+                (0, $fRX83$_WeakMap_prototype).set(hookProxies, proxy, value);
                 return proxy;
             },
             set (value) {
-                while((0, $fRX83$_WeakMap_prototype).has($160958df551d9c11$export$a992e08d9566370c, value))value = (0, $fRX83$_WeakMap_prototype).get($160958df551d9c11$export$a992e08d9566370c, value);
+                while((0, $fRX83$_WeakMap_prototype).has(hookProxies, value))value = (0, $fRX83$_WeakMap_prototype).get(hookProxies, value);
                 if (descriptor?.set) descriptor.set(value);
                 else descriptor.value = value;
             }
