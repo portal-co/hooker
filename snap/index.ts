@@ -4,11 +4,11 @@ export function snapshot<T, U, V>(fn: (this: T, ...U) => V): (self: T, ...U) => 
 export type SnapshotInput<T, U, V> = (this: T, ...U) => V;
 export type ProtoSnapshot<T> = { [Prop in keyof T]: T[Prop] extends SnapshotInput<infer T2, infer U, infer V> ? (self: T2, ...U) => V : never };
 export function snapshotProto<T extends object>(val: T): ProtoSnapshot<T> {
-    let a = {};
-    for (let k of Object.keys(val)) {
+    let wipProtoSnapshot = {};
+    for (let key of Object.keys(val)) {
         let wrapped;
-        if ((wrapped = val[k]) instanceof Function) a[k] = snapshot(wrapped);
+        if ((wrapped = val[key]) instanceof Function) wipProtoSnapshot[key] = snapshot(wrapped);
     }
-    return a as ProtoSnapshot<T>;
+    return wipProtoSnapshot as ProtoSnapshot<T>;
 }
 export * from "./extras.ts"

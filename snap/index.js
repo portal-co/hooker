@@ -25,12 +25,12 @@ function $fbbf9f1270777348$export$b8801ea43165ed7d(fn) {
     return fn.call.bind(fn);
 }
 function $fbbf9f1270777348$export$8dab992974ec7ae6(val) {
-    let a = {};
-    for (let k of Object.keys(val)){
+    let wipProtoSnapshot = {};
+    for (let key of Object.keys(val)){
         let wrapped;
-        if ((wrapped = val[k]) instanceof Function) a[k] = $fbbf9f1270777348$export$b8801ea43165ed7d(wrapped);
+        if ((wrapped = val[key]) instanceof Function) wipProtoSnapshot[key] = $fbbf9f1270777348$export$b8801ea43165ed7d(wrapped);
     }
-    return a;
+    return wipProtoSnapshot;
 }
 
 

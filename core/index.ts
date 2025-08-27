@@ -4,42 +4,42 @@ export const hookProxies: WeakMap<any, any> = new WeakMap();
 export const _Proxy: typeof Proxy = globalThis?.Proxy;
 export const _Reflect: typeof Reflect = 'Reflect' in globalThis ? { ...Reflect } : undefined as any;
 export type HookOpts = { isProperty?: boolean, Proxy?: typeof _Proxy, Reflect?: typeof _Reflect };
-export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b: K, c: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty = false, Proxy = _Proxy, Reflect = _Reflect }: HookOpts = {}) {
+export function hook<T extends { [a in K]: object }, K extends keyof T>(object: T, key: K, hook: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty = false, Proxy = _Proxy, Reflect = _Reflect }: HookOpts = {}) {
     // a[b] = new _Proxy(a[b], c(_Reflect));
     if (isProperty) {
-        hookProp(a, b, d => ((d ??= { value: undefined }), {
-            configurable: d?.configurable ?? true,
-            enumerable: d?.enumerable ?? true,
-            writable: d?.writable ?? true,
+        hookProp(object, key, descriptor => ((descriptor ??= { value: undefined }), {
+            configurable: descriptor?.configurable ?? true,
+            enumerable: descriptor?.enumerable ?? true,
+            writable: descriptor?.writable ?? true,
             get() {
-                var p: T[K], v: T[K];
-                if (d?.get) {
-                    p = new (Proxy)(v = d!.get!(), c(Reflect));
+                var proxy: T[K], value: T[K];
+                if (descriptor?.get) {
+                    proxy = new (Proxy)(value = descriptor!.get!(), hook(Reflect));
                 } else {
-                    p = new (Proxy)(v = d!.value!, c(Reflect));
+                    proxy = new (Proxy)(value = descriptor!.value!, hook(Reflect));
                 }
-                _WeakMap_prototype.set(hookProxies, p, v);
-                return p;
+                _WeakMap_prototype.set(hookProxies, proxy, value);
+                return proxy;
             },
             set(value) {
                 while (_WeakMap_prototype.has(hookProxies, value)) {
                     value = _WeakMap_prototype.get(hookProxies, value)!;
                 }
-                if (d?.set) {
-                    d!.set!(value)
+                if (descriptor?.set) {
+                    descriptor!.set!(value)
                 } else {
-                    d.value = value;
+                    descriptor.value = value;
                 }
             }
         }), { Reflect });
     } else {
-        a[b] = new (Proxy)(a[b], c(Reflect));
+        object[key] = new (Proxy)(object[key], hook(Reflect));
     }
 }
-export function hookProp<T extends { [a in K]: any }, K extends keyof T>(a: T, b: K, c: (d: TypedPropertyDescriptor<T[K]> | undefined) => TypedPropertyDescriptor<T[K]>, { Reflect = _Reflect }: { Reflect?: typeof _Reflect } = {}) {
-    let d = Reflect.getOwnPropertyDescriptor(a, b);
+export function hookProp<T extends { [a in K]: any }, K extends keyof T>(object: T, key: K, hook: (descriptor: TypedPropertyDescriptor<T[K]> | undefined) => TypedPropertyDescriptor<T[K]>, { Reflect = _Reflect }: { Reflect?: typeof _Reflect } = {}) {
+    const descriptor = Reflect.getOwnPropertyDescriptor(object, key);
     // if (d !== undefined) {
-    Reflect.defineProperty(a, b, c(d));
+    Reflect.defineProperty(object, key, hook(descriptor));
     // }
 }
 export * from './events.ts'

@@ -10,10 +10,10 @@ export type HookOpts = {
 };
 export function hook<T extends {
     [a in K]: object;
-}, K extends keyof T>(a: T, b: K, c: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty, Proxy, Reflect }?: HookOpts): void;
+}, K extends keyof T>(object: T, key: K, hook: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty, Proxy, Reflect }?: HookOpts): void;
 export function hookProp<T extends {
     [a in K]: any;
-}, K extends keyof T>(a: T, b: K, c: (d: TypedPropertyDescriptor<T[K]> | undefined) => TypedPropertyDescriptor<T[K]>, { Reflect }?: {
+}, K extends keyof T>(object: T, key: K, hook: (descriptor: TypedPropertyDescriptor<T[K]> | undefined) => TypedPropertyDescriptor<T[K]>, { Reflect }?: {
     Reflect?: typeof _Reflect;
 }): void;
 export * from '@portal-solutions/hooker-snap';
