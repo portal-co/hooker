@@ -8,7 +8,7 @@ export function hookEvent<T extends EventTarget>(ev: T, event_proxy: (Reflect: t
             let handler = argArray[1];
             let name;
             let h2 = $ => {
-                let e = new _Proxy($, event_proxy(Reflect, name));
+                let e = new (opts.Proxy ?? _Proxy)($, event_proxy(Reflect, name));
                 _WeakMap_prototype.set(events, e, $);
                 handler(e);
             };

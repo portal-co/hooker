@@ -18,7 +18,7 @@ function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy, opts = {}) {
                 let handler = argArray[1];
                 let name;
                 let h2 = ($)=>{
-                    let e = new (0, $160958df551d9c11$export$38ba3e7950588cca)($, event_proxy(Reflect, name));
+                    let e = new (opts.Proxy ?? (0, $160958df551d9c11$export$38ba3e7950588cca))($, event_proxy(Reflect, name));
                     (0, $160958df551d9c11$exports._WeakMap_prototype).set($d96c5798fe320e70$export$4bf9923669ad6c63, e, $);
                     handler(e);
                 };
