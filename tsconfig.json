@@ -4,6 +4,7 @@
             "esnext",
             "DOM"
         ],
+        "target": "esnext",
         "allowImportingTsExtensions": true
     }
 }
