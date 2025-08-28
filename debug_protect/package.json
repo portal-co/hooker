@@ -1,6 +1,6 @@
 {
-  "name": "@portal-solutions/hooker-core",
-  "version": "1.0.4",
+  "name": "@portal-solutions/hooker-debug-protect",
+  "version": "1.0.0",
   "description": "",
   "license": "ISC",
   "author": "",
@@ -10,6 +10,9 @@
   "source": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@portal-solutions/hooker-core": "^1.0.4"
   },
   "devDependencies": {}
 }

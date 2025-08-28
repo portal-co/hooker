@@ -16,8 +16,8 @@ export function snapshotProto<T extends object>(val: T): ProtoSnapshot<T> {
     }
     return a as ProtoSnapshot<T>;
 }
-
-export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b: K, c: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty = false, Proxy = _Proxy }: { isProperty?: boolean, Proxy?: typeof _Proxy } = {}) {
+export type HookOpts = { isProperty?: boolean, Proxy?: typeof _Proxy };
+export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b: K, c: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty = false, Proxy = _Proxy }: HookOpts = {}) {
     // a[b] = new _Proxy(a[b], c(_Reflect));
     if (isProperty) {
         hookProp(a, b, d => ((d ??= { value: undefined }), {
@@ -46,7 +46,7 @@ export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b:
             }
         }));
     } else {
-        a[b] = new (Proxy)(a[b],c(_Reflect));
+        a[b] = new (Proxy)(a[b], c(_Reflect));
     }
 }
 export function hookProp<T extends { [a in K]: any }, K extends keyof T>(a: T, b: K, c: (d: TypedPropertyDescriptor<T[K]> | undefined) => TypedPropertyDescriptor<T[K]>) {
