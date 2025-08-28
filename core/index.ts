@@ -1,59 +1,51 @@
-import { _WeakMap_prototype } from './extras.ts';
+import { _WeakMap_prototype, _WeakMap, snapshot, snapshotProto } from '@portal-solutions/hooker-snap';
 
-export const _Proxy = Proxy;
-export const _Reflect: typeof Reflect = { ...Reflect };
-export const hookProxies: WeakMap<any, any> = new WeakMap();
-export function snapshot<T, U, V>(fn: (this: T, ...U) => V): (self: T, ...U) => V {
-    return fn.call.bind(fn);
-}
-export type SnapshotInput<T, U, V> = (this: T, ...U) => V;
-export type ProtoSnapshot<T> = { [Prop in keyof T]: T[Prop] extends SnapshotInput<infer T2, infer U, infer V> ? (self: T2, ...U) => V : never };
-export function snapshotProto<T extends object>(val: T): ProtoSnapshot<T> {
-    let a = {};
-    for (let k of Object.keys(val)) {
-        let wrapped;
-        if ((wrapped = val[k]) instanceof Function) a[k] = snapshot(wrapped);
-    }
-    return a as ProtoSnapshot<T>;
-}
-export type HookOpts = { isProperty?: boolean, Proxy?: typeof _Proxy };
-export function hook<T extends { [a in K]: object }, K extends keyof T>(a: T, b: K, c: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty = false, Proxy = _Proxy }: HookOpts = {}) {
+export const hookProxies: WeakMap<any, any> = _WeakMap ? new _WeakMap() : undefined;
+const _hookProxies = hookProxies;
+export const _Proxy: typeof Proxy = globalThis?.Proxy;
+export const _Reflect: typeof Reflect = 'Reflect' in globalThis ? { ...Reflect } : undefined as any;
+export type HookPropOpts = {Reflect?: typeof _Reflect, attempt?: boolean };
+export type HookOpts = { isProperty?: boolean, Proxy?: typeof _Proxy,  hookProxies?: typeof hookProxies } & HookPropOpts;
+const { isFrozen } = Object;
+export function hook<T extends { [a in K]: object }, K extends keyof T>(object: T, key: K, hook: (Reflect: typeof _Reflect) => ProxyHandler<T[K]>, { isProperty = false, Proxy = _Proxy, Reflect = _Reflect, hookProxies = _hookProxies, attempt = false }: HookOpts = {}) {
     // a[b] = new _Proxy(a[b], c(_Reflect));
+    if (attempt && isFrozen(object)) return;
     if (isProperty) {
-        hookProp(a, b, d => ((d ??= { value: undefined }), {
-            configurable: d?.configurable ?? true,
-            enumerable: d?.enumerable ?? true,
-            writable: d?.writable ?? true,
+        hookProp(object, key, descriptor => ((descriptor ??= { value: undefined }), {
+            configurable: descriptor?.configurable ?? true,
+            enumerable: descriptor?.enumerable ?? true,
+            writable: descriptor?.writable ?? true,
             get() {
-                var p: T[K], v: T[K];
-                if (d?.get) {
-                    p = new (Proxy)(v = d!.get!(), c(_Reflect));
+                var proxy: T[K], value: T[K];
+                if (descriptor?.get) {
+                    proxy = new (Proxy)(value = descriptor!.get!(), hook(Reflect));
                 } else {
-                    p = new (Proxy)(v = d!.value!, c(_Reflect));
+                    proxy = new (Proxy)(value = descriptor!.value!, hook(Reflect));
                 }
-                _WeakMap_prototype.set(hookProxies, p, v);
-                return p;
+                _WeakMap_prototype.set(hookProxies, proxy, value);
+                return proxy;
             },
             set(value) {
                 while (_WeakMap_prototype.has(hookProxies, value)) {
                     value = _WeakMap_prototype.get(hookProxies, value)!;
                 }
-                if (d?.set) {
-                    d!.set!(value)
+                if (descriptor?.set) {
+                    descriptor!.set!(value)
                 } else {
-                    d.value = value;
+                    descriptor.value = value;
                 }
             }
-        }));
+        }), { Reflect, attempt });
     } else {
-        a[b] = new (Proxy)(a[b], c(_Reflect));
+        object[key] = new (Proxy)(object[key], hook(Reflect));
     }
 }
-export function hookProp<T extends { [a in K]: any }, K extends keyof T>(a: T, b: K, c: (d: TypedPropertyDescriptor<T[K]> | undefined) => TypedPropertyDescriptor<T[K]>) {
-    let d = _Reflect.getOwnPropertyDescriptor(a, b);
+export function hookProp<T extends { [a in K]: any }, K extends keyof T>(object: T, key: K, hook: (descriptor: TypedPropertyDescriptor<T[K]> | undefined) => TypedPropertyDescriptor<T[K]>, { Reflect = _Reflect, attempt = false }: HookPropOpts = {}) {
+    if (attempt && isFrozen(object)) return;
+    const descriptor = Reflect.getOwnPropertyDescriptor(object, key);
     // if (d !== undefined) {
-    _Reflect.defineProperty(a, b, c(d));
+    Reflect.defineProperty(object, key, hook(descriptor));
     // }
 }
 export * from './events.ts'
-export * from './extras.ts'
+export * from '@portal-solutions/hooker-snap'

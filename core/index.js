@@ -1,119 +1,99 @@
+import * as $fRX83$portalsolutionshookersnap from "@portal-solutions/hooker-snap";
+
 
 function $parcel$export(e, n, v, s) {
   Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
 }
-var $0e3a44384afbf336$exports = {};
-
-$parcel$export($0e3a44384afbf336$exports, "_DataView", () => $0e3a44384afbf336$export$fee260b073a0c9c6);
-$parcel$export($0e3a44384afbf336$exports, "_DataView_prototype", () => $0e3a44384afbf336$export$fdecce9c58909361);
-$parcel$export($0e3a44384afbf336$exports, "_ArrayBuffer", () => $0e3a44384afbf336$export$bb9d876482492a0e);
-$parcel$export($0e3a44384afbf336$exports, "_Uint8Array", () => $0e3a44384afbf336$export$8f39e0e69a4ee8ab);
-$parcel$export($0e3a44384afbf336$exports, "_Uint8Array_prototype", () => $0e3a44384afbf336$export$3e3718c836d59639);
-$parcel$export($0e3a44384afbf336$exports, "_WeakMap", () => $0e3a44384afbf336$export$bc81b4c74ea2198d);
-$parcel$export($0e3a44384afbf336$exports, "_WeakMap_prototype", () => $0e3a44384afbf336$export$17cf1b6ad644bf44);
-
-const $0e3a44384afbf336$export$fee260b073a0c9c6 = DataView;
-const $0e3a44384afbf336$export$fdecce9c58909361 = (0, $160958df551d9c11$export$8dab992974ec7ae6)($0e3a44384afbf336$export$fee260b073a0c9c6.prototype);
-const $0e3a44384afbf336$export$bb9d876482492a0e = ArrayBuffer;
-const $0e3a44384afbf336$export$8f39e0e69a4ee8ab = Uint8Array;
-const $0e3a44384afbf336$export$3e3718c836d59639 = (0, $160958df551d9c11$export$8dab992974ec7ae6)($0e3a44384afbf336$export$8f39e0e69a4ee8ab.prototype);
-const $0e3a44384afbf336$export$bc81b4c74ea2198d = WeakMap;
-const $0e3a44384afbf336$export$17cf1b6ad644bf44 = (0, $160958df551d9c11$export$8dab992974ec7ae6)($0e3a44384afbf336$export$bc81b4c74ea2198d.prototype);
-
 
 var $d96c5798fe320e70$exports = {};
 
 $parcel$export($d96c5798fe320e70$exports, "events", () => $d96c5798fe320e70$export$4bf9923669ad6c63);
 $parcel$export($d96c5798fe320e70$exports, "hookEvent", () => $d96c5798fe320e70$export$df859eeaa8b45967);
 
-let $d96c5798fe320e70$export$4bf9923669ad6c63 = new WeakMap();
-function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy) {
-    let m = new WeakMap();
+let $d96c5798fe320e70$export$4bf9923669ad6c63 = new (0, $160958df551d9c11$exports._WeakMap)();
+function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy, opts = {}) {
+    const handlerMap = new (0, $160958df551d9c11$exports._WeakMap)();
     (0, $160958df551d9c11$export$1062a250c78723ea)(ev, "addEventListener", (Reflect)=>({
             apply (target, thisArg, argArray) {
                 let handler = argArray[1];
                 let name;
-                let h2 = ($)=>{
-                    let e = new (0, $160958df551d9c11$export$38ba3e7950588cca)($, event_proxy(Reflect, name));
-                    (0, $0e3a44384afbf336$export$17cf1b6ad644bf44).set($d96c5798fe320e70$export$4bf9923669ad6c63, e, $);
-                    handler(e);
+                let h2 = (origEvent)=>{
+                    const newEvent = new (opts.Proxy ?? (0, $160958df551d9c11$export$38ba3e7950588cca))(origEvent, event_proxy(Reflect, name));
+                    (0, $160958df551d9c11$exports._WeakMap_prototype).set($d96c5798fe320e70$export$4bf9923669ad6c63, newEvent, origEvent);
+                    handler(newEvent);
                 };
-                m.set(handler, h2);
+                (0, $160958df551d9c11$exports._WeakMap_prototype).set(handlerMap, handler, h2);
                 return Reflect.apply(target, thisArg, [
                     name = argArray[0],
                     h2
                 ]);
             }
-        }));
+        }), opts);
     (0, $160958df551d9c11$export$1062a250c78723ea)(ev, "removeEventListener", (Reflect)=>({
             apply (target, thisArg, argArray) {
                 let handler = argArray[1];
-                let h2 = (0, $0e3a44384afbf336$export$17cf1b6ad644bf44).get(m, handler);
-                (0, $0e3a44384afbf336$export$17cf1b6ad644bf44).delete(m, handler);
+                let h2 = (0, $160958df551d9c11$exports._WeakMap_prototype).get(handlerMap, handler);
+                (0, $160958df551d9c11$exports._WeakMap_prototype).delete(handlerMap, handler);
                 return Reflect.apply(target, thisArg, [
                     argArray[0],
                     h2
                 ]);
             }
-        }));
+        }), opts);
     if (ev instanceof EventSource) (0, $160958df551d9c11$export$1062a250c78723ea)(ev, "dispatchEvent", (Reflect)=>({
             apply (target, thisArg, argArray) {
                 var ev = argArray[0];
-                if ((0, $0e3a44384afbf336$export$17cf1b6ad644bf44).has($d96c5798fe320e70$export$4bf9923669ad6c63, ev)) ev = (0, $0e3a44384afbf336$export$17cf1b6ad644bf44).get($d96c5798fe320e70$export$4bf9923669ad6c63, ev);
+                if ((0, $160958df551d9c11$exports._WeakMap_prototype).has($d96c5798fe320e70$export$4bf9923669ad6c63, ev)) ev = (0, $160958df551d9c11$exports._WeakMap_prototype).get($d96c5798fe320e70$export$4bf9923669ad6c63, ev);
                 return Reflect.apply(target, thisArg, [
                     ev
                 ]);
             }
-        }));
+        }), opts);
 }
 
 
-const $160958df551d9c11$export$38ba3e7950588cca = Proxy;
-const $160958df551d9c11$export$c7c8cae26635c874 = {
+const $160958df551d9c11$export$a992e08d9566370c = (0, $fRX83$_WeakMap) ? new (0, $fRX83$_WeakMap)() : undefined;
+const $160958df551d9c11$var$_hookProxies = $160958df551d9c11$export$a992e08d9566370c;
+const $160958df551d9c11$export$38ba3e7950588cca = globalThis?.Proxy;
+const $160958df551d9c11$export$c7c8cae26635c874 = 'Reflect' in globalThis ? {
     ...Reflect
-};
-const $160958df551d9c11$export$a992e08d9566370c = new WeakMap();
-function $160958df551d9c11$export$b8801ea43165ed7d(fn) {
-    return fn.call.bind(fn);
-}
-function $160958df551d9c11$export$8dab992974ec7ae6(val) {
-    let a = {};
-    for (let k of Object.keys(val)){
-        let wrapped;
-        if ((wrapped = val[k]) instanceof Function) a[k] = $160958df551d9c11$export$b8801ea43165ed7d(wrapped);
-    }
-    return a;
-}
-function $160958df551d9c11$export$1062a250c78723ea(a, b, c, { isProperty: isProperty = false, Proxy: Proxy1 = $160958df551d9c11$export$38ba3e7950588cca } = {}) {
+} : undefined;
+const { isFrozen: $160958df551d9c11$var$isFrozen } = Object;
+function $160958df551d9c11$export$1062a250c78723ea(object, key, hook1, { isProperty: isProperty = false, Proxy: Proxy = $160958df551d9c11$export$38ba3e7950588cca, Reflect: Reflect1 = $160958df551d9c11$export$c7c8cae26635c874, hookProxies: hookProxies = $160958df551d9c11$var$_hookProxies, attempt: attempt = false } = {}) {
     // a[b] = new _Proxy(a[b], c(_Reflect));
-    if (isProperty) $160958df551d9c11$export$ba312a2d6db6c3aa(a, b, (d)=>(d ??= {
+    if (attempt && $160958df551d9c11$var$isFrozen(object)) return;
+    if (isProperty) $160958df551d9c11$export$ba312a2d6db6c3aa(object, key, (descriptor)=>(descriptor ??= {
             value: undefined
         }, {
-            configurable: d?.configurable ?? true,
-            enumerable: d?.enumerable ?? true,
-            writable: d?.writable ?? true,
+            configurable: descriptor?.configurable ?? true,
+            enumerable: descriptor?.enumerable ?? true,
+            writable: descriptor?.writable ?? true,
             get () {
-                var p, v;
-                if (d?.get) p = new Proxy1(v = d.get(), c($160958df551d9c11$export$c7c8cae26635c874));
-                else p = new Proxy1(v = d.value, c($160958df551d9c11$export$c7c8cae26635c874));
-                (0, $0e3a44384afbf336$export$17cf1b6ad644bf44).set($160958df551d9c11$export$a992e08d9566370c, p, v);
-                return p;
+                var proxy, value;
+                if (descriptor?.get) proxy = new Proxy(value = descriptor.get(), hook1(Reflect1));
+                else proxy = new Proxy(value = descriptor.value, hook1(Reflect1));
+                (0, $fRX83$_WeakMap_prototype).set(hookProxies, proxy, value);
+                return proxy;
             },
             set (value) {
-                while((0, $0e3a44384afbf336$export$17cf1b6ad644bf44).has($160958df551d9c11$export$a992e08d9566370c, value))value = (0, $0e3a44384afbf336$export$17cf1b6ad644bf44).get($160958df551d9c11$export$a992e08d9566370c, value);
-                if (d?.set) d.set(value);
-                else d.value = value;
+                while((0, $fRX83$_WeakMap_prototype).has(hookProxies, value))value = (0, $fRX83$_WeakMap_prototype).get(hookProxies, value);
+                if (descriptor?.set) descriptor.set(value);
+                else descriptor.value = value;
             }
-        }));
-    else a[b] = new Proxy1(a[b], c($160958df551d9c11$export$c7c8cae26635c874));
+        }), {
+        Reflect: Reflect1,
+        attempt: attempt
+    });
+    else object[key] = new Proxy(object[key], hook1(Reflect1));
 }
-function $160958df551d9c11$export$ba312a2d6db6c3aa(a, b, c) {
-    let d = $160958df551d9c11$export$c7c8cae26635c874.getOwnPropertyDescriptor(a, b);
+function $160958df551d9c11$export$ba312a2d6db6c3aa(object, key, hook, { Reflect: Reflect1 = $160958df551d9c11$export$c7c8cae26635c874, attempt: attempt = false } = {}) {
+    if (attempt && $160958df551d9c11$var$isFrozen(object)) return;
+    const descriptor = Reflect1.getOwnPropertyDescriptor(object, key);
     // if (d !== undefined) {
-    $160958df551d9c11$export$c7c8cae26635c874.defineProperty(a, b, c(d));
+    Reflect1.defineProperty(object, key, hook(descriptor));
 // }
 }
 
 
-export {$160958df551d9c11$export$38ba3e7950588cca as _Proxy, $160958df551d9c11$export$c7c8cae26635c874 as _Reflect, $160958df551d9c11$export$a992e08d9566370c as hookProxies, $160958df551d9c11$export$b8801ea43165ed7d as snapshot, $160958df551d9c11$export$8dab992974ec7ae6 as snapshotProto, $160958df551d9c11$export$1062a250c78723ea as hook, $160958df551d9c11$export$ba312a2d6db6c3aa as hookProp, $0e3a44384afbf336$export$fee260b073a0c9c6 as _DataView, $0e3a44384afbf336$export$fdecce9c58909361 as _DataView_prototype, $0e3a44384afbf336$export$bb9d876482492a0e as _ArrayBuffer, $0e3a44384afbf336$export$8f39e0e69a4ee8ab as _Uint8Array, $0e3a44384afbf336$export$3e3718c836d59639 as _Uint8Array_prototype, $0e3a44384afbf336$export$bc81b4c74ea2198d as _WeakMap, $0e3a44384afbf336$export$17cf1b6ad644bf44 as _WeakMap_prototype, $d96c5798fe320e70$export$4bf9923669ad6c63 as events, $d96c5798fe320e70$export$df859eeaa8b45967 as hookEvent};
+export {$160958df551d9c11$export$a992e08d9566370c as hookProxies, $160958df551d9c11$export$38ba3e7950588cca as _Proxy, $160958df551d9c11$export$c7c8cae26635c874 as _Reflect, $160958df551d9c11$export$1062a250c78723ea as hook, $160958df551d9c11$export$ba312a2d6db6c3aa as hookProp, $d96c5798fe320e70$export$4bf9923669ad6c63 as events, $d96c5798fe320e70$export$df859eeaa8b45967 as hookEvent};
 //# sourceMappingURL=index.js.map

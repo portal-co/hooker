@@ -1,7 +1,9 @@
 {
     "name": "@portal-solutions/hooker",
     "workspaces": [
-        "core"
+        "core",
+        "snap",
+        "debug_protect"
     ],
     "devDependencies": {
         "@parcel/packager-ts": "^2.15.4",

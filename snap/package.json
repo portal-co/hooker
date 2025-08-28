@@ -1,6 +1,6 @@
 {
-  "name": "@portal-solutions/hooker-core",
-  "version": "1.0.4",
+  "name": "@portal-solutions/hooker-snap",
+  "version": "1.0.3",
   "description": "",
   "license": "ISC",
   "author": "",
@@ -11,8 +11,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {},
-  "dependencies": {
-    "@portal-solutions/hooker-snap": "^1.0.3"
-  }
+  "devDependencies": {}
 }
