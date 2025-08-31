@@ -27,23 +27,25 @@ export function init({
   Proxy = _Proxy,
   Reflect = _Reflect,
   console = _console,
+  attempt = false,
 }: {
   Proxy?: typeof _Proxy;
   Reflect?: typeof _Reflect;
-  console?: typeof _console;
+  console?: { log: Function };
+  attempt?: boolean;
 } = {}) {
   for (const key of ["log"])
     hook(
       console as any,
       key,
-      (r) => ({
+      (Reflect) => ({
         apply: (o, t, a) => {
           for (let i = 0; i < a.length; i++) {
             a[i] = cleanseDevTools(a[i], { Proxy, Reflect });
           }
-          return r.apply(o, t, a);
+          return Reflect.apply(o, t, a);
         },
       }),
-      { Proxy, Reflect }
+      { Proxy, Reflect, attempt }
     );
 }

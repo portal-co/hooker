@@ -55,13 +55,13 @@ function $d96c5798fe320e70$export$df859eeaa8b45967(ev, event_proxy, opts = {}) {
 const $160958df551d9c11$export$a992e08d9566370c = (0, $fRX83$_WeakMap) ? new (0, $fRX83$_WeakMap)() : undefined;
 const $160958df551d9c11$var$_hookProxies = $160958df551d9c11$export$a992e08d9566370c;
 const $160958df551d9c11$export$38ba3e7950588cca = globalThis?.Proxy;
-const $160958df551d9c11$export$c7c8cae26635c874 = 'Reflect' in globalThis ? {
+const $160958df551d9c11$export$c7c8cae26635c874 = "Reflect" in globalThis ? {
     ...Reflect
 } : undefined;
-const { isFrozen: $160958df551d9c11$var$isFrozen } = Object;
-function $160958df551d9c11$export$1062a250c78723ea(object, key, hook1, { isProperty: isProperty = false, Proxy: Proxy = $160958df551d9c11$export$38ba3e7950588cca, Reflect: Reflect1 = $160958df551d9c11$export$c7c8cae26635c874, hookProxies: hookProxies = $160958df551d9c11$var$_hookProxies, attempt: attempt = false } = {}) {
+const { isFrozen: $160958df551d9c11$var$_isFrozen } = Object;
+function $160958df551d9c11$export$1062a250c78723ea(object, key, hook1, { isProperty: isProperty = false, Proxy: Proxy = $160958df551d9c11$export$38ba3e7950588cca, Reflect: Reflect1 = $160958df551d9c11$export$c7c8cae26635c874, hookProxies: hookProxies = $160958df551d9c11$var$_hookProxies, attempt: attempt = false, isFrozen: isFrozen = $160958df551d9c11$var$_isFrozen } = {}) {
     // a[b] = new _Proxy(a[b], c(_Reflect));
-    if (attempt && $160958df551d9c11$var$isFrozen(object)) return;
+    if (attempt && isFrozen(object)) return;
     if (isProperty) $160958df551d9c11$export$ba312a2d6db6c3aa(object, key, (descriptor)=>(descriptor ??= {
             value: undefined
         }, {
@@ -82,12 +82,13 @@ function $160958df551d9c11$export$1062a250c78723ea(object, key, hook1, { isPrope
             }
         }), {
         Reflect: Reflect1,
-        attempt: attempt
+        attempt: attempt,
+        isFrozen: isFrozen
     });
     else object[key] = new Proxy(object[key], hook1(Reflect1));
 }
-function $160958df551d9c11$export$ba312a2d6db6c3aa(object, key, hook, { Reflect: Reflect1 = $160958df551d9c11$export$c7c8cae26635c874, attempt: attempt = false } = {}) {
-    if (attempt && $160958df551d9c11$var$isFrozen(object)) return;
+function $160958df551d9c11$export$ba312a2d6db6c3aa(object, key, hook, { Reflect: Reflect1 = $160958df551d9c11$export$c7c8cae26635c874, attempt: attempt = false, isFrozen: isFrozen = $160958df551d9c11$var$_isFrozen } = {}) {
+    if (attempt && isFrozen(object)) return;
     const descriptor = Reflect1.getOwnPropertyDescriptor(object, key);
     // if (d !== undefined) {
     Reflect1.defineProperty(object, key, hook(descriptor));

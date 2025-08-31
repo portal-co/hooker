@@ -20,20 +20,21 @@ function $95fdd9c12cc04e3f$var$cleanseDevTools(a, { Proxy: Proxy = (0, $k1ZFv$_P
     return a;
 }
 const $95fdd9c12cc04e3f$var$_console = console;
-function $95fdd9c12cc04e3f$export$2cd8252107eb640b({ Proxy: Proxy = (0, $k1ZFv$_Proxy), Reflect: Reflect = (0, $k1ZFv$_Reflect), console: console1 = $95fdd9c12cc04e3f$var$_console } = {}) {
+function $95fdd9c12cc04e3f$export$2cd8252107eb640b({ Proxy: Proxy = (0, $k1ZFv$_Proxy), Reflect: Reflect = (0, $k1ZFv$_Reflect), console: console1 = $95fdd9c12cc04e3f$var$_console, attempt: attempt = false } = {}) {
     for (const key of [
         "log"
-    ])(0, $k1ZFv$hook)(console1, key, (r)=>({
+    ])(0, $k1ZFv$hook)(console1, key, (Reflect)=>({
             apply: (o, t, a)=>{
                 for(let i = 0; i < a.length; i++)a[i] = $95fdd9c12cc04e3f$var$cleanseDevTools(a[i], {
                     Proxy: Proxy,
                     Reflect: Reflect
                 });
-                return r.apply(o, t, a);
+                return Reflect.apply(o, t, a);
             }
         }), {
         Proxy: Proxy,
-        Reflect: Reflect
+        Reflect: Reflect,
+        attempt: attempt
     });
 }
 

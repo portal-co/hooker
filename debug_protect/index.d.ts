@@ -1,9 +1,11 @@
 import { _Proxy, _Reflect } from "@portal-solutions/hooker-core";
-declare const _console: typeof console;
-export function init({ Proxy, Reflect, console, }?: {
+export function init({ Proxy, Reflect, console, attempt, }?: {
     Proxy?: typeof _Proxy;
     Reflect?: typeof _Reflect;
-    console?: typeof _console;
+    console?: {
+        log: Function;
+    };
+    attempt?: boolean;
 }): void;
 
 //# sourceMappingURL=index.d.ts.map
