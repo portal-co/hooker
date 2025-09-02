@@ -19,7 +19,7 @@ exports.snapshotProto = snapshotProto;
 function snapshot(fn) {
     return fn.call.bind(fn);
 }
-function snapshotProto(val, { speedy = false } = {}) {
+function snapshotProto(val, { speedy = false, getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor, } = {}) {
     let wipProtoSnapshot = {};
     for (let key in val) {
         let wrapped;
@@ -29,6 +29,11 @@ function snapshotProto(val, { speedy = false } = {}) {
                 value = ((old) => (a, ...args) => val[key] === wrapped ? a[key](...args) : old(a, ...args))(value);
             wipProtoSnapshot[key] = value;
         }
+        const desc = getOwnPropertyDescriptor(val, key);
+        wipProtoSnapshot[key] = {
+            get: snapshot(desc.get),
+            set: snapshot(desc.set),
+        };
     }
     return wipProtoSnapshot;
 }
