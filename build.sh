@@ -1,3 +1,4 @@
 cd $(dirname $0)
 node ./update.mjs
-npx parcel build ./core ./snap ./debug_protect
+sh ./snap/build.sh
+npx parcel build ./core  ./debug_protect

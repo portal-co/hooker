@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports._WeakMap_prototype = exports._WeakMap = exports._Uint8Array_prototype = exports._Uint8Array = exports._ArrayBuffer = exports._DataView_prototype = exports._DataView = void 0;
+const index_ts_1 = require("./index.cjs");
+exports._DataView = globalThis?.DataView;
+exports._DataView_prototype = exports._DataView === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._DataView.prototype);
+exports._ArrayBuffer = globalThis?.ArrayBuffer;
+exports._Uint8Array = globalThis?.Uint8Array;
+exports._Uint8Array_prototype = exports._Uint8Array === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Uint8Array.prototype);
+exports._WeakMap = globalThis?.WeakMap;
+exports._WeakMap_prototype = exports._WeakMap === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._WeakMap.prototype);
