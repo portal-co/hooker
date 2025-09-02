@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._WeakMap_prototype = exports._WeakMap = exports._Uint8Array_prototype = exports._Uint8Array = exports._ArrayBuffer = exports._DataView_prototype = exports._DataView = void 0;
+exports._Function_prototype = exports._Function = exports._Array_prototype = exports._Array = exports._String_prototype = exports._String = exports._WeakMap_prototype = exports._WeakMap = exports._Uint8Array_prototype = exports._Uint8Array = exports._ArrayBuffer = exports._DataView_prototype = exports._DataView = void 0;
 const index_ts_1 = require("./index.cjs");
 exports._DataView = globalThis?.DataView;
 exports._DataView_prototype = exports._DataView === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._DataView.prototype);
@@ -9,3 +9,9 @@ exports._Uint8Array = globalThis?.Uint8Array;
 exports._Uint8Array_prototype = exports._Uint8Array === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Uint8Array.prototype);
 exports._WeakMap = globalThis?.WeakMap;
 exports._WeakMap_prototype = exports._WeakMap === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._WeakMap.prototype);
+exports._String = globalThis?.String;
+exports._String_prototype = exports._String === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._String.prototype);
+exports._Array = globalThis?.Array;
+exports._Array_prototype = exports._Array === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Array.prototype);
+exports._Function = globalThis?.Function;
+exports._Function_prototype = exports._Function === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Function.prototype);

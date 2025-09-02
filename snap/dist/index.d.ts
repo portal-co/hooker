@@ -1,7 +1,8 @@
-export declare function snapshot<T, U, V>(fn: (this: T, ...U: any[]) => V): (self: T, ...U: any[]) => V;
+export declare function snapshot<F extends (...args: any) => any>(fn: F): SnapshotOutput<F>;
 export type SnapshotInput<T, U, V> = (this: T, ...U: any[]) => V;
+export type SnapshotOutput<F extends (...args: any) => any> = (self: ThisParameterType<F>, ...v: Parameters<F>) => ReturnType<F>;
 export type ProtoSnapshot<T> = {
-    [Prop in keyof T]: T[Prop] extends SnapshotInput<infer T2, infer U, infer V> ? (self: T2, ...U: any[]) => V : {
+    [Prop in keyof T]: T[Prop] extends (...args: any) => any ? SnapshotOutput<T[Prop]> : {
         get(self: T): T[Prop];
         set(self: T, value: T[Prop]): any;
     };

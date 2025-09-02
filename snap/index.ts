@@ -1,12 +1,16 @@
-export function snapshot<T, U, V>(
-  fn: (this: T, ...U) => V
-): (self: T, ...U) => V {
+export function snapshot<F extends (...args: any) => any>(
+  fn: F
+): SnapshotOutput<F> {
   return fn.call.bind(fn);
 }
 export type SnapshotInput<T, U, V> = (this: T, ...U) => V;
+export type SnapshotOutput<F extends (...args: any) => any> = (
+  self: ThisParameterType<F>,
+  ...v: Parameters<F>
+) => ReturnType<F>;
 export type ProtoSnapshot<T> = {
-  [Prop in keyof T]: T[Prop] extends SnapshotInput<infer T2, infer U, infer V>
-    ? (self: T2, ...U) => V
+  [Prop in keyof T]: T[Prop] extends (...args: any) => any
+    ? SnapshotOutput<T[Prop]>
     : { get(self: T): T[Prop]; set(self: T, value: T[Prop]) };
 };
 export function snapshotProto<T extends object>(
@@ -33,6 +37,7 @@ export function snapshotProto<T extends object>(
       wipProtoSnapshot[key] = value;
     }
     const desc = getOwnPropertyDescriptor(val, key);
+    if(desc === undefined)continue;
     wipProtoSnapshot[key] = {
       get: snapshot(desc.get),
       set: snapshot(desc.set),

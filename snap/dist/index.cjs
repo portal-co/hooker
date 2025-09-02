@@ -30,6 +30,8 @@ function snapshotProto(val, { speedy = false, getOwnPropertyDescriptor = Object.
             wipProtoSnapshot[key] = value;
         }
         const desc = getOwnPropertyDescriptor(val, key);
+        if (desc === undefined)
+            continue;
         wipProtoSnapshot[key] = {
             get: snapshot(desc.get),
             set: snapshot(desc.set),
