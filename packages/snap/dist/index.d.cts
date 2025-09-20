@@ -11,4 +11,7 @@ export declare function snapshotProto<T extends object>(val: T, { speedy, getOwn
     speedy?: boolean;
     getOwnPropertyDescriptor?: typeof Object.getOwnPropertyDescriptor;
 }): ProtoSnapshot<T>;
+export declare function quickProto<T extends object>(a: T): ProtoSnapshot<T>;
+export declare const _Proxy: typeof Proxy;
+export declare const _Reflect: typeof Reflect;
 export * from "./extras.cjs";

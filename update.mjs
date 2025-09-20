@@ -9,7 +9,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 writeFileSync(
   `${__dirname}/packages/snap/extras.ts`,
   `
-import { snapshotProto } from "./index.ts";
+import { snapshotProto, quickProto } from "./index.ts";
 const _path = (a: any, b: (string | symbol)[]) => {
   for(const c of b) {
     a = a?.[c];
@@ -28,6 +28,13 @@ export const _${a.name.replaceAll(".", "_")}_prototype = _${a.name.replaceAll(
             ".",
             "_"
           )} === undefined ? undefined : snapshotProto(_${a.name.replaceAll(
+            ".",
+            "_"
+          )}.prototype);
+export const _${a.name.replaceAll(".", "_")}_quick_prototype = _${a.name.replaceAll(
+            ".",
+            "_"
+          )} === undefined ? undefined : quickProto(_${a.name.replaceAll(
             ".",
             "_"
           )}.prototype);`

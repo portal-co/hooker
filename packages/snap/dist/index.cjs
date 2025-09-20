@@ -14,8 +14,10 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports._Reflect = exports._Proxy = void 0;
 exports.snapshot = snapshot;
 exports.snapshotProto = snapshotProto;
+exports.quickProto = quickProto;
 function snapshot(fn) {
     return fn.call.bind(fn);
 }
@@ -39,4 +41,24 @@ function snapshotProto(val, { speedy = false, getOwnPropertyDescriptor = Object.
     }
     return wipProtoSnapshot;
 }
+function quickProto(a) {
+    if (!exports._Proxy)
+        return undefined;
+    return {
+        ...new exports._Proxy(a, {
+            get(target, p, receiver) {
+                if (typeof target[p] === "function")
+                    return (a, ...args) => a[p](...args);
+                return {
+                    get: (a) => a[p],
+                    set: (a, v) => {
+                        a[p] = v;
+                    },
+                };
+            },
+        }),
+    };
+}
+exports._Proxy = globalThis?.Proxy;
+exports._Reflect = "Reflect" in globalThis ? { ...Reflect } : undefined;
 __exportStar(require("./extras.cjs"), exports);

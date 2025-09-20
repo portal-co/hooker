@@ -12,7 +12,8 @@ function $3d62cee6fd7b124a$var$cleanseDevTools(a, { Proxy: Proxy = (0, $b5dSV$_P
                 get: (o, k, r)=>{
                     if (k in $3d62cee6fd7b124a$var$bobj) return undefined;
                     return Reflect.get(o, k, r);
-                }
+                },
+                has: (o, k)=>!(k in $3d62cee6fd7b124a$var$bobj) && Reflect.has(o, k)
             });
             break;
         }

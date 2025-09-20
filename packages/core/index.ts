@@ -3,15 +3,15 @@ import {
   _WeakMap,
   snapshot,
   snapshotProto,
+  _Proxy,
+  _Reflect,
 } from "@portal-solutions/hooker-snap";
 
 export const hookProxies: WeakMap<any, any> = _WeakMap
   ? new _WeakMap()
   : undefined;
 const _hookProxies = hookProxies;
-export const _Proxy: typeof Proxy = globalThis?.Proxy;
-export const _Reflect: typeof Reflect =
-  "Reflect" in globalThis ? { ...Reflect } : (undefined as any);
+
 const { isFrozen: _isFrozen } = Object;
 export type HookPropOpts = {
   Reflect?: typeof _Reflect;

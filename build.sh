@@ -3,4 +3,5 @@ set -e
 sh ./packages/data/build.sh
 node ./update.mjs
 sh ./packages/snap/build.sh
-npx parcel build ./packages/core  ./packages/debug_protect ./packages/sealant
+sh ./packages/core/build.sh
+npx parcel build ./packages/debug_protect ./packages/sealant

@@ -16,6 +16,7 @@ function cleanseDevTools(
             if (k in bobj) return undefined;
             return Reflect.get(o, k, r);
           },
+          has: (o, k) => !(k in bobj) && Reflect.has(o, k),
         });
         break;
       }

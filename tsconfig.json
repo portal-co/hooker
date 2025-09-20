@@ -1,10 +1,14 @@
 {
-    "compilerOptions": {
-        "lib": [
-            "esnext",
-            "DOM"
-        ],
-        "target": "esnext",
-        "allowImportingTsExtensions": true
+  "compilerOptions": {
+    "lib": ["esnext", "DOM"],
+    "target": "esnext",
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "composite": true,
+    "paths": {
+      "@portal-solutions/hooker-snap": ["./packages/snap"]
     }
+  }
 }

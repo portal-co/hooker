@@ -5,14 +5,25 @@
   "license": "ISC",
   "author": "",
   "type": "module",
-  "types": "index.d.ts",
-  "main": "index.js",
-  "source": "index.ts",
+  "types": "./dist/index.d.cts",
+  "main": "./dist/index.cjs",
+  "zshy": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {},
   "dependencies": {
     "@portal-solutions/hooker-snap": "^1.0.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.cts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
   }
 }

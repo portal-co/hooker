@@ -37,7 +37,7 @@ export function snapshotProto<T extends object>(
       wipProtoSnapshot[key] = value;
     }
     const desc = getOwnPropertyDescriptor(val, key);
-    if(desc === undefined)continue;
+    if (desc === undefined) continue;
     wipProtoSnapshot[key] = {
       get: snapshot(desc.get),
       set: snapshot(desc.set),
@@ -45,4 +45,24 @@ export function snapshotProto<T extends object>(
   }
   return wipProtoSnapshot as ProtoSnapshot<T>;
 }
+export function quickProto<T extends object>(a: T): ProtoSnapshot<T> {
+  if (!_Proxy) return undefined!;
+  return {
+    ...new _Proxy(a, {
+      get(target, p, receiver) {
+        if (typeof target[p] === "function")
+          return (a, ...args) => a[p](...args);
+        return {
+          get: (a) => a[p],
+          set: (a, v) => {
+            a[p] = v;
+          },
+        };
+      },
+    }),
+  } as any as ProtoSnapshot<T>;
+}
+export const _Proxy: typeof Proxy = globalThis?.Proxy;
+export const _Reflect: typeof Reflect =
+  "Reflect" in globalThis ? { ...Reflect } : (undefined as any);
 export * from "./extras.ts";
