@@ -2,12 +2,12 @@ import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { writeFileSync } from "node:fs";
 
-import { snapshots } from "./data/dist/index.js";
+import { snapshots } from "./packages/data/dist/index.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 writeFileSync(
-  `${__dirname}/snap/extras.ts`,
+  `${__dirname}/packages/snap/extras.ts`,
   `
 import { snapshotProto } from "./index.ts";
 const _path = (a: any, b: (string | symbol)[]) => {

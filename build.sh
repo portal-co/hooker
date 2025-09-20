@@ -1,6 +1,6 @@
 cd $(dirname $0)
 set -e
-sh ./data/build.sh
+sh ./packages/data/build.sh
 node ./update.mjs
-sh ./snap/build.sh
-npx parcel build ./core  ./debug_protect ./sealant
+sh ./packages/snap/build.sh
+npx parcel build ./packages/core  ./packages/debug_protect ./packages/sealant
