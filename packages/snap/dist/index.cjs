@@ -18,9 +18,11 @@ exports._Reflect = exports._Proxy = void 0;
 exports.snapshot = snapshot;
 exports.snapshotProto = snapshotProto;
 exports.quickProto = quickProto;
+/*#__NO_SIDE_EFFECTS__*/
 function snapshot(fn) {
     return fn.call.bind(fn);
 }
+/*#__NO_SIDE_EFFECTS__*/
 function snapshotProto(val, { speedy = false, getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor, } = {}) {
     let wipProtoSnapshot = {};
     for (let key in val) {
@@ -41,6 +43,7 @@ function snapshotProto(val, { speedy = false, getOwnPropertyDescriptor = Object.
     }
     return wipProtoSnapshot;
 }
+/*#__NO_SIDE_EFFECTS__*/
 function quickProto(a) {
     if (!exports._Proxy)
         return undefined;

@@ -1,3 +1,4 @@
+/*#__NO_SIDE_EFFECTS__*/
 export function snapshot<F extends (...args: any) => any>(
   fn: F
 ): SnapshotOutput<F> {
@@ -13,6 +14,7 @@ export type ProtoSnapshot<T> = {
     ? SnapshotOutput<T[Prop]>
     : { get(self: T): T[Prop]; set(self: T, value: T[Prop]) };
 };
+/*#__NO_SIDE_EFFECTS__*/
 export function snapshotProto<T extends object>(
   val: T,
   {
@@ -45,6 +47,7 @@ export function snapshotProto<T extends object>(
   }
   return wipProtoSnapshot as ProtoSnapshot<T>;
 }
+/*#__NO_SIDE_EFFECTS__*/
 export function quickProto<T extends object>(a: T): ProtoSnapshot<T> {
   if (!_Proxy) return undefined!;
   return {

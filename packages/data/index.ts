@@ -1,6 +1,6 @@
 export const snapshots: Snapshot[] = [
   { name: "DataView", proto: true },
-  { name: "ArrayBuffer", proto: false },
+  { name: "ArrayBuffer", proto: true },
   { name: "Uint8Array", proto: true },
   { name: "Uint16Array", proto: true },
   { name: "Uint32Array", proto: true },
@@ -10,8 +10,9 @@ export const snapshots: Snapshot[] = [
   { name: "Float32Array", proto: true },
   { name: "Float64Array", proto: true },
   { name: "WeakMap", proto: true },
-  { name: "String", proto: true },
+  { name: "String", proto: true, props: true },
   { name: "Array", proto: true },
   { name: "Function", proto: true },
+  { name: "Math", proto: false, props: true },
 ];
-export type Snapshot = { name: string; proto: boolean };
+export type Snapshot = { name: string; proto: boolean; props?: boolean };

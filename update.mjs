@@ -17,30 +17,25 @@ const _path = (a: any, b: (string | symbol)[]) => {
   return a;  
 }
 ${snapshots
-  .map(
-    (a) => `
-export const _${a.name.replaceAll(".", "_")}: typeof ${
-      a.name
-    } = _path(globalThis,${JSON.stringify(a.name.split("."))});${
+  .map((a) => {
+    const n = a.name.replaceAll(".", "_");
+    return `
+export const _${n}: typeof ${a.name} = _path(globalThis,${JSON.stringify(
+      a.name.split(".")
+    )});${
       a.proto
         ? `
-export const _${a.name.replaceAll(".", "_")}_prototype = _${a.name.replaceAll(
-            ".",
-            "_"
-          )} === undefined ? undefined : snapshotProto(_${a.name.replaceAll(
-            ".",
-            "_"
-          )}.prototype);
-export const _${a.name.replaceAll(".", "_")}_quick_prototype = _${a.name.replaceAll(
-            ".",
-            "_"
-          )} === undefined ? undefined : quickProto(_${a.name.replaceAll(
-            ".",
-            "_"
-          )}.prototype);`
+export const _${n}_prototype = _${n} === undefined ? undefined : /*#__PURE__*/ snapshotProto(_${n}.prototype);
+export const _${n}_quick_prototype = _${n} === undefined ? undefined :/*#__PURE__*/  quickProto(_${n}.prototype);`
         : ""
-    }`
-  )
+    }
+    ${
+      a.props ?? false
+        ? `
+export const _${n}_props = _${n} === undefined ? undefined : {..._${n}}`
+        : ""
+    }`;
+  })
   .join("\n")}
 `.replaceAll("\n\n", "\n")
 );

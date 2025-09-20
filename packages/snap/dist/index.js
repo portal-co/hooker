@@ -1,6 +1,8 @@
+/*#__NO_SIDE_EFFECTS__*/
 export function snapshot(fn) {
     return fn.call.bind(fn);
 }
+/*#__NO_SIDE_EFFECTS__*/
 export function snapshotProto(val, { speedy = false, getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor, } = {}) {
     let wipProtoSnapshot = {};
     for (let key in val) {
@@ -21,6 +23,7 @@ export function snapshotProto(val, { speedy = false, getOwnPropertyDescriptor = 
     }
     return wipProtoSnapshot;
 }
+/*#__NO_SIDE_EFFECTS__*/
 export function quickProto(a) {
     if (!_Proxy)
         return undefined;
