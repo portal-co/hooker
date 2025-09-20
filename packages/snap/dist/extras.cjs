@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._Function_quick_prototype = exports._Function_prototype = exports._Function = exports._Array_quick_prototype = exports._Array_prototype = exports._Array = exports._String_quick_prototype = exports._String_prototype = exports._String = exports._WeakMap_quick_prototype = exports._WeakMap_prototype = exports._WeakMap = exports._Uint8Array_quick_prototype = exports._Uint8Array_prototype = exports._Uint8Array = exports._ArrayBuffer = exports._DataView_quick_prototype = exports._DataView_prototype = exports._DataView = void 0;
+exports._Function_quick_prototype = exports._Function_prototype = exports._Function = exports._Array_quick_prototype = exports._Array_prototype = exports._Array = exports._String_quick_prototype = exports._String_prototype = exports._String = exports._WeakMap_quick_prototype = exports._WeakMap_prototype = exports._WeakMap = exports._Float64Array_quick_prototype = exports._Float64Array_prototype = exports._Float64Array = exports._Float32Array_quick_prototype = exports._Float32Array_prototype = exports._Float32Array = exports._Int32Array_quick_prototype = exports._Int32Array_prototype = exports._Int32Array = exports._Int16Array_quick_prototype = exports._Int16Array_prototype = exports._Int16Array = exports._Int8Array_quick_prototype = exports._Int8Array_prototype = exports._Int8Array = exports._Uint32Array_quick_prototype = exports._Uint32Array_prototype = exports._Uint32Array = exports._Uint16Array_quick_prototype = exports._Uint16Array_prototype = exports._Uint16Array = exports._Uint8Array_quick_prototype = exports._Uint8Array_prototype = exports._Uint8Array = exports._ArrayBuffer = exports._DataView_quick_prototype = exports._DataView_prototype = exports._DataView = void 0;
 const index_ts_1 = require("./index.cjs");
 const _path = (a, b) => {
     for (const c of b) {
@@ -16,6 +16,27 @@ exports._ArrayBuffer = _path(globalThis, ["ArrayBuffer"]);
 exports._Uint8Array = _path(globalThis, ["Uint8Array"]);
 exports._Uint8Array_prototype = exports._Uint8Array === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Uint8Array.prototype);
 exports._Uint8Array_quick_prototype = exports._Uint8Array === undefined ? undefined : (0, index_ts_1.quickProto)(exports._Uint8Array.prototype);
+exports._Uint16Array = _path(globalThis, ["Uint16Array"]);
+exports._Uint16Array_prototype = exports._Uint16Array === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Uint16Array.prototype);
+exports._Uint16Array_quick_prototype = exports._Uint16Array === undefined ? undefined : (0, index_ts_1.quickProto)(exports._Uint16Array.prototype);
+exports._Uint32Array = _path(globalThis, ["Uint32Array"]);
+exports._Uint32Array_prototype = exports._Uint32Array === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Uint32Array.prototype);
+exports._Uint32Array_quick_prototype = exports._Uint32Array === undefined ? undefined : (0, index_ts_1.quickProto)(exports._Uint32Array.prototype);
+exports._Int8Array = _path(globalThis, ["Int8Array"]);
+exports._Int8Array_prototype = exports._Int8Array === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Int8Array.prototype);
+exports._Int8Array_quick_prototype = exports._Int8Array === undefined ? undefined : (0, index_ts_1.quickProto)(exports._Int8Array.prototype);
+exports._Int16Array = _path(globalThis, ["Int16Array"]);
+exports._Int16Array_prototype = exports._Int16Array === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Int16Array.prototype);
+exports._Int16Array_quick_prototype = exports._Int16Array === undefined ? undefined : (0, index_ts_1.quickProto)(exports._Int16Array.prototype);
+exports._Int32Array = _path(globalThis, ["Int32Array"]);
+exports._Int32Array_prototype = exports._Int32Array === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Int32Array.prototype);
+exports._Int32Array_quick_prototype = exports._Int32Array === undefined ? undefined : (0, index_ts_1.quickProto)(exports._Int32Array.prototype);
+exports._Float32Array = _path(globalThis, ["Float32Array"]);
+exports._Float32Array_prototype = exports._Float32Array === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Float32Array.prototype);
+exports._Float32Array_quick_prototype = exports._Float32Array === undefined ? undefined : (0, index_ts_1.quickProto)(exports._Float32Array.prototype);
+exports._Float64Array = _path(globalThis, ["Float64Array"]);
+exports._Float64Array_prototype = exports._Float64Array === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._Float64Array.prototype);
+exports._Float64Array_quick_prototype = exports._Float64Array === undefined ? undefined : (0, index_ts_1.quickProto)(exports._Float64Array.prototype);
 exports._WeakMap = _path(globalThis, ["WeakMap"]);
 exports._WeakMap_prototype = exports._WeakMap === undefined ? undefined : (0, index_ts_1.snapshotProto)(exports._WeakMap.prototype);
 exports._WeakMap_quick_prototype = exports._WeakMap === undefined ? undefined : (0, index_ts_1.quickProto)(exports._WeakMap.prototype);
