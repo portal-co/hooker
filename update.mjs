@@ -10,13 +10,28 @@ writeFileSync(
   `${__dirname}/snap/extras.ts`,
   `
 import { snapshotProto } from "./index.ts";
+const _path = (a: any, b: (string | symbol)[]) => {
+  for(const c of b) {
+    if(!(c in a))return undefined;
+    a = a[c];
+  };
+  return a;  
+}
 ${snapshots
   .map(
     (a) => `
-export const _${a.name} = globalThis?.${a.name};${
+export const _${a.name.replaceAll(".", "_")}: typeof ${
+      a.name
+    } = _path(globalThis,${JSON.stringify(a.name.split("."))});${
       a.proto
         ? `
-export const _${a.name}_prototype = _${a.name} === undefined ? undefined : snapshotProto(_${a.name}.prototype);`
+export const _${a.name.replaceAll(".", "_")}_prototype = _${a.name.replaceAll(
+            ".",
+            "_"
+          )} === undefined ? undefined : snapshotProto(_${a.name.replaceAll(
+            ".",
+            "_"
+          )}.prototype);`
         : ""
     }`
   )
