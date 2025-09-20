@@ -1,0 +1,19 @@
+{
+  "name": "@portal-solutions/hooker-sealant",
+  "version": "1.0.6",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "types": "index.d.ts",
+  "main": "index.js",
+  "source": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@portal-solutions/hooker-snap": "^1.0.3",
+    "@portal-solutions/hooker-core": "^1.0.3"
+  }
+}
