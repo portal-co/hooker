@@ -1,9 +1,7 @@
 import { snapshotProto } from "./index.js";
 const _path = (a, b) => {
     for (const c of b) {
-        if (!(c in a))
-            return undefined;
-        a = a[c];
+        a = a?.[c];
     }
     ;
     return a;

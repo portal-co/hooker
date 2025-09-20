@@ -2,8 +2,7 @@
 import { snapshotProto } from "./index.ts";
 const _path = (a: any, b: (string | symbol)[]) => {
   for(const c of b) {
-    if(!(c in a))return undefined;
-    a = a[c];
+    a = a?.[c];
   };
   return a;  
 }

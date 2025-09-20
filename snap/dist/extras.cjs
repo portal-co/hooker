@@ -4,9 +4,7 @@ exports._Function_prototype = exports._Function = exports._Array_prototype = exp
 const index_ts_1 = require("./index.cjs");
 const _path = (a, b) => {
     for (const c of b) {
-        if (!(c in a))
-            return undefined;
-        a = a[c];
+        a = a?.[c];
     }
     ;
     return a;
