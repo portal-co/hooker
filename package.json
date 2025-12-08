@@ -14,5 +14,18 @@
     "typescript": "^5.8.3",
     "zshy": "^0.4.1"
   },
-  "zshy": "./packages/core/index.ts"
+  "zshy": "./packages/core/index.ts",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  }
 }
