@@ -4,4 +4,4 @@ sh ./packages/data/build.sh
 node ./update.mjs
 sh ./packages/snap/build.sh
 sh ./packages/core/build.sh
-npx zshynt
+npx zshy -p tsconfig.json
