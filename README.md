@@ -1,13 +1,14 @@
 # @portal-solutions/hooker
 
 ## Description
-Project hooker
+A TypeScript monorepo containing packages for "debug protection", "snapping", and "sealant". Likely related to JS environment security/integrity.
 
 ## Goals
-- [ ] Add project goals
+- [ ] Implement debug protection
+- [ ] Provide environment snapping/sealing
 
 ## Progress
-- [ ] Initial setup
+- [ ] Monorepo setup with core packages
 
 ---
 *AI assisted*
