@@ -9,13 +9,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 writeFileSync(
   `${__dirname}/packages/snap/extras.ts`,
   `
-import { snapshotProto, quickProto } from "./index.ts";
-const _path = (a: any, b: (string | symbol)[]) => {
-  for(const c of b) {
-    a = a?.[c];
-  };
-  return a;  
-}
+import { snapshotProto, quickProto, _path, binder } from "./index.ts";
+
 ${snapshots
   .map((a) => {
     const n = a.name.replaceAll(".", "_");
@@ -32,7 +27,7 @@ export const _${n}_quick_prototype = _${n} === undefined ? undefined :/*#__PURE_
     ${
       a.props ?? false
         ? `
-export const _${n}_props = _${n} === undefined ? undefined : {..._${n}}`
+export const _${n}_props = _${n} === undefined ? undefined : {...binder(_${n})}`
         : ""
     }`;
   })

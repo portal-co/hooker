@@ -65,7 +65,27 @@ export function quickProto<T extends object>(a: T): ProtoSnapshot<T> {
     }),
   } as any as ProtoSnapshot<T>;
 }
-export const _Proxy: typeof Proxy = globalThis?.Proxy;
-export const _Reflect: typeof Reflect =
-  "Reflect" in globalThis ? { ...Reflect } : (undefined as any);
+/*#__NO_SIDE_EFFECTS__*/
+export function binder<T extends object>(a: T): T{
+  return _Proxy ? new _Proxy(a, {
+    get(target, p, receiver) {
+      const v = target[p];
+      if(typeof v === "function"){
+        return v.bind(target);
+      }
+      return v;
+    }
+  }) : a;
+}
+export const _Proxy: undefined | typeof Proxy = globalThis?.Proxy;
+export const _Reflect: undefined | typeof Reflect =
+  "Reflect" in globalThis ? { ...binder(Reflect) } : (undefined as any);
+
+export const _path = (a: any, b: (string | symbol)[]) => {
+  for(const c of b) {
+    a = a?.[c];
+  };
+  return a;  
+}
+
 export * from "./extras.ts";
