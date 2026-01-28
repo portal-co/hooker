@@ -15,3 +15,23 @@ export const snapshots = [
     { name: "Function", proto: true },
     { name: "Math", proto: false, props: true },
 ];
+/**
+ * Generate the content for `packages/snap/extras.ts` from a snapshot list.
+ * This returns a TypeScript source string that downstream packages can write
+ * out. The function is intentionally lightweight so callers can post-process
+ * or change paths as needed.
+ */
+export function generateExtras(snapshots, { rootPath = "./index.ts" } = {}) {
+    const header = `import { snapshotProto, quickProto, _path, binder } from ${JSON.stringify(rootPath)};\n\n`;
+    const body = snapshots
+        .map((a) => {
+        const n = a.name.replaceAll(".", "_");
+        return `export const _${n}: typeof ${a.name} = _path(globalThis,${JSON.stringify(a.name.split("."))});${a.proto
+            ? `\nexport const _${n}_prototype = _${n} === undefined ? undefined : /*#__PURE__*/ snapshotProto(_${n}.prototype);\nexport const _${n}_quick_prototype = _${n} === undefined ? undefined :/*#__PURE__*/  quickProto(_${n}.prototype);`
+            : ""}${a.props ?? false
+            ? `\nexport const _${n}_props = _${n} === undefined ? undefined : {...binder(_${n})}`
+            : ""}`;
+    })
+        .join("\n");
+    return (header + body).replaceAll("\n\n", "\n");
+}

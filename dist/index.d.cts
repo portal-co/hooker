@@ -17,5 +17,5 @@ export declare function hook<T extends {
 export declare function hookProp<T extends {
     [a in K]: any;
 }, K extends keyof T>(object: T, key: K, hook: (descriptor: TypedPropertyDescriptor<T[K]> | undefined) => TypedPropertyDescriptor<T[K]>, { Reflect, attempt, isFrozen, }?: HookPropOpts): void;
-export * from "./events.mjs";
+export * from "./events.cjs";
 export * from "@portal-solutions/hooker-snap";

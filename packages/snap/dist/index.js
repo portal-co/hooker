@@ -42,6 +42,25 @@ export function quickProto(a) {
         }),
     };
 }
+/*#__NO_SIDE_EFFECTS__*/
+export function binder(a) {
+    return _Proxy ? new _Proxy(a, {
+        get(target, p, receiver) {
+            const v = target[p];
+            if (typeof v === "function") {
+                return v.bind(target);
+            }
+            return v;
+        }
+    }) : a;
+}
 export const _Proxy = globalThis?.Proxy;
-export const _Reflect = "Reflect" in globalThis ? { ...Reflect } : undefined;
+export const _Reflect = "Reflect" in globalThis ? { ...binder(Reflect) } : undefined;
+export const _path = (a, b) => {
+    for (const c of b) {
+        a = a?.[c];
+    }
+    ;
+    return a;
+};
 export * from "./extras.js";

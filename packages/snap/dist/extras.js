@@ -1,11 +1,4 @@
-import { snapshotProto, quickProto } from "./index.js";
-const _path = (a, b) => {
-    for (const c of b) {
-        a = a?.[c];
-    }
-    ;
-    return a;
-};
+import { snapshotProto, quickProto, _path, binder } from "./index.js";
 export const _DataView = _path(globalThis, ["DataView"]);
 export const _DataView_prototype = _DataView === undefined ? undefined : /*#__PURE__*/ snapshotProto(_DataView.prototype);
 export const _DataView_quick_prototype = _DataView === undefined ? undefined : /*#__PURE__*/ quickProto(_DataView.prototype);
@@ -42,7 +35,7 @@ export const _WeakMap_quick_prototype = _WeakMap === undefined ? undefined : /*#
 export const _String = _path(globalThis, ["String"]);
 export const _String_prototype = _String === undefined ? undefined : /*#__PURE__*/ snapshotProto(_String.prototype);
 export const _String_quick_prototype = _String === undefined ? undefined : /*#__PURE__*/ quickProto(_String.prototype);
-export const _String_props = _String === undefined ? undefined : { ..._String };
+export const _String_props = _String === undefined ? undefined : { ...binder(_String) };
 export const _Array = _path(globalThis, ["Array"]);
 export const _Array_prototype = _Array === undefined ? undefined : /*#__PURE__*/ snapshotProto(_Array.prototype);
 export const _Array_quick_prototype = _Array === undefined ? undefined : /*#__PURE__*/ quickProto(_Array.prototype);
@@ -50,4 +43,4 @@ export const _Function = _path(globalThis, ["Function"]);
 export const _Function_prototype = _Function === undefined ? undefined : /*#__PURE__*/ snapshotProto(_Function.prototype);
 export const _Function_quick_prototype = _Function === undefined ? undefined : /*#__PURE__*/ quickProto(_Function.prototype);
 export const _Math = _path(globalThis, ["Math"]);
-export const _Math_props = _Math === undefined ? undefined : { ..._Math };
+export const _Math_props = _Math === undefined ? undefined : { ...binder(_Math) };
