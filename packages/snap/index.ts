@@ -81,7 +81,7 @@ export const _Proxy: undefined | typeof Proxy = globalThis?.Proxy;
 export const _Reflect: undefined | typeof Reflect =
   "Reflect" in globalThis ? { ...binder(Reflect) } : (undefined as any);
 
-export const _path = (a: any, b: (string | symbol)[]) => {
+export const _path = /*#__NO_SIDE_EFFECTS__*/ (a: any, b: (string | symbol)[]) => {
   for(const c of b) {
     a = a?.[c];
   };
